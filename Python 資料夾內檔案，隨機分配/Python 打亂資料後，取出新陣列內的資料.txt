@@ -1,0 +1,57 @@
+import os.path
+import numpy as np
+
+# 某個資料夾路徑，點開該資料夾，上面就能複製路徑，記得將"反斜線"改成"斜線"
+path = "C:/Users/226083/Desktop/test output"
+
+
+name = os.listdir(path)
+
+print("name = " , name)
+print("總共有%s筆資料"%len(name))
+print("")
+
+index = []
+
+for i in range(len(name)):
+    index.append(i)
+
+
+
+print("=======================")
+
+
+print("shuffle_before")
+print("")
+
+for num1 in index:
+    print("name 第%s個 = "%num1 ,name[index[num1]])
+
+
+
+print("=======================")
+print("")
+
+np.random.shuffle(index)
+print("index_shuffle_after = " , index)
+print("")
+
+name_new = []
+count = 0
+
+for num2 in index:
+    name_new.append(name[num2])
+
+    print("name 第%s個 = "%num2 ,name[index[count]])
+    count += 1
+
+#print(name_new)
+
+print("前40%資料 = ",name_new[0:int(len(index)*0.4)])
+print("")
+print("40%~70%資料 = " , name_new[int(len(index)*0.4) : int(len(index)*0.7)])
+print("")
+print("70%~100%資料 = ",name_new[int(len(index)*0.7) : int(len(index))])
+
+
+print("==========================================================")

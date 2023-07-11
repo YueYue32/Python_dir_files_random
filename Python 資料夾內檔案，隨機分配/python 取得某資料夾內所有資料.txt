@@ -1,0 +1,11 @@
+import os.path
+
+# 某個資料夾路徑，點開該資料夾，上面就能複製路徑，記得將"反斜線"改成"斜線"
+path = "C:/Users/226083/Desktop/雲端測試"
+
+
+name = os.listdir(path)
+
+print(name)
+print(" ")
+print(type(name))       # 目前name資料型態為"list"

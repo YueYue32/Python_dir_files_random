@@ -1,0 +1,142 @@
+import os.path
+import numpy as np
+import shutil
+
+
+#===================================================================================
+# 第一部分
+
+# 資料夾路徑，點開該資料夾，上面就能複製路徑，記得將"反斜線"改成"斜線"
+old_path = "C:/Users/226083/Desktop/test output"       # 原資料夾
+new_path = "C:/Users/226083/Desktop/test take over"    # 目標資料夾
+
+name = os.listdir(old_path)      # 列出原資料夾內所有檔案，以串列表示之
+
+print("name = " , name)
+print("總共有%s筆資料"%len(name))
+print("")
+
+
+#====================================================================================
+# 第2部分
+
+index = []      # 裝資料的索引值用
+
+
+for i in range(len(name)):
+    index.append(i)
+
+
+print("=======================")
+
+
+print("shuffle_before")
+print("")
+
+# 按照順序印出原資料夾內所有檔案
+for num1 in index:
+    print("name 第%s個 = "%num1 ,name[index[num1]])
+
+
+print("=======================")
+print("")
+
+
+#====================================================================================
+# 第3部分
+
+# 打亂索引值
+np.random.shuffle(index)
+
+print("index_shuffle_after = " , index)
+print("")
+
+
+
+name_new = []     # 用來裝打亂後的資料
+count = 0
+
+# 按照打亂後的順序，印出那些資料
+for num2 in index:
+    name_new.append(name[num2])
+
+    print("name 第%s個 = "%num2 ,name[index[count]])
+    count += 1
+
+#====================================================================================
+# 第4部分
+
+# 取出某些區間的資料
+
+
+# 取出前40%的資料
+zer0_fourtyth = name_new[0:int(len(index)*0.4)]
+
+
+# 取出第40%~第70%的資料
+fourthty_seventyth = name_new[int(len(index)*0.4) : int(len(index)*0.7)]
+
+# 取出第70%~第100%的資料
+seventyth_100 = name_new[int(len(index)*0.7) : int(len(index))]
+
+
+print("前40%資料 = ", zer0_fourtyth)
+print("")
+print("40%~70%資料 = " , fourthty_seventyth)
+print("")
+print("70%~100%資料 = ", seventyth_100)
+
+
+print("==========================================================")
+
+
+#====================================================================================
+# 第5部分
+
+# 去除副檔名，並且把只包含前檔名的資料，放進串列"new_zer0_fourtyth"
+new_zer0_fourtyth = []
+
+for item in zer0_fourtyth:
+    item = item.replace(".xml.txt" , "")
+    item = item.replace(".jpg.txt", "")
+    new_zer0_fourtyth.append(item)
+
+    print(item)
+
+
+# 取出一部分資料，可能會取出"重複"的資料編號，所以有以下一步驟
+# 將資料"字典化"，可有效讀取出"未重複的資料"，再轉換回list型態
+list_new_zer0_fourtyth = list(dict.fromkeys(new_zer0_fourtyth))
+
+print(list_new_zer0_fourtyth)
+
+#==============================================================================
+# 第6部分
+
+# 更改檔案名稱，把前檔名加上副檔名，並且存進串列"list_new_zer0_fourtyth_file_extension"
+list_new_zer0_fourtyth_file_extension = []
+
+for file in list_new_zer0_fourtyth:
+        file_jpg = file + str(".jpg.txt")
+
+        file_txt = file + str(".xml.txt")
+
+        list_new_zer0_fourtyth_file_extension.append(file_jpg)
+
+        list_new_zer0_fourtyth_file_extension.append(file_txt)
+
+print(list_new_zer0_fourtyth_file_extension)
+
+#==============================================================================
+# 第7部分
+
+# 移動檔案到指定資料夾
+# os.path.join(dirpath, filename) 功能：連結 dirpath和filename，變成一個"完整路徑"
+for file_extension in list_new_zer0_fourtyth_file_extension:
+    src = os.path.join(old_path, file_extension)
+
+    src = src.replace("\\" , "/")
+
+    print('src:', src)    #印出會被移動的檔案
+
+    shutil.move(src , new_path)
